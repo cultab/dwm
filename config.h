@@ -4,11 +4,12 @@
 /* appearance */
 static const unsigned int borderpx = 4;        /* border pixel of windows */
 static const unsigned int gappx    = 4;        /* gaps between windows */
+static const char gappxs[]         = "4";      /* gaps between windows for dmenu */
 static const unsigned int snap     = 16;       /* snap pixel */
 static const int showbar           = 1;        /* 0 means no bar */
 static const int topbar            = 1;        /* 0 means bottom bar */
-static const int vertpad           = 4;        /* vertical padding of bar */
-static const int sidepad           = 4;        /* horizontal padding of bar */
+static const int vertpad           = gappx;    /* vertical padding of bar */
+static const int sidepad           = gappx;    /* horizontal padding of bar */
 static const char *fonts[]         = { "Victor:size=12", "Victor Mono Nerd Font:size=12:antialias=true:autohint=true"};
 static const char dmenufont[]      =   "Victor Mono Nerd Font:size=12:antialias=true:autohint=true";
 static char normbgcolor[]          = "#222222";
@@ -75,8 +76,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]     = { "dmenu_run",   "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, "-l", "5", NULL };
-static const char *dmenu_query[]  = { "dmenu_query", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
+
+static const char *dmenucmd[]     = { "dmenu_run",   "-m", dmenumon, "-c", "-bw", gappxs, NULL };
+static const char *dmenu_query[]  = { "dmenu_query", "-m", dmenumon, "-c", "-bw", gappxs, NULL };
 
 static const char *termcmd[]      = { "st", NULL };
 static const char *tmux_termcmd[] = { "st", "-t", "tmux", "-e", "tmux" };
@@ -87,12 +89,11 @@ static const char *decscrcmd[]     = { "xbacklight", "-dec", "5", NULL };
 static const char *muteMcmd[]     = { "amixer", "-q", "set", "Master", "toggle", NULL };
 static const char *muteScmd[]     = { "amixer", "-q", "set", "Speaker", "toggle", NULL };
 static const char *muteHcmd[]     = { "amixer", "-q", "set", "Headphone", "toggle", NULL };
-static const char *volupcmd[]     = { "amixer", "-q", "set", "Master", "10%+", NULL };
-static const char *voldowncmd[]   = { "amixer", "-q", "set", "Master", "10%-", NULL };
-
+static const char *volupcmd[]     = { "amixer", "-q", "set", "Master", "5%+", NULL };
+static const char *voldowncmd[]   = { "amixer", "-q", "set", "Master", "5%-", NULL };
 static const char *miccmd[]       = { "amixer", "set", "Capture", "toggle", NULL };
 
-/*First arg only serves to match against key in rules*/
+/* First arg only serves to match against key in rules */
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", NULL }; 
 static const char *fffcmd[]        = {"f", "st", "-t", "fff",        "-e", "fff" }; 
 static const char *bgcmd[]         = {"b", "st", "-t", "bg-choose",  "-e", "bg-choose" }; 
